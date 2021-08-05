@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import EditorPage from '../client/pages/EditorPage';
 
 export default function Home() {
   return (
@@ -10,9 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        Hello World
-      </div>
+      <EditorPage />
     </div>
   )
 }
