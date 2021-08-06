@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import EditorPage from '../client/pages/EditorPage';
+import Head from 'next/head';
+import EditorPage from '../client/pages/EditorPage/EditorPage';
 
 export default function Home() {
   return (
@@ -12,5 +12,5 @@ export default function Home() {
 
       <EditorPage />
     </div>
-  )
+  );
 }

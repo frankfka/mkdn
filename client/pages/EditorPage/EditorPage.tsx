@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import MarkdownRenderer from '../components/MarkdownRenderer/MarkdownRenderer';
-import TextEditor from '../components/TextEditor/TextEditor';
-import createPostFetchInit from '../util/createPostFetchInit';
+import MarkdownRenderer from '../../components/MarkdownRenderer/MarkdownRenderer';
+import TextEditor from '../../components/TextEditor/TextEditor';
+import createPostFetchInit from '../../util/createPostFetchInit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +38,6 @@ const EditorPage = () => {
   return (
     <div className={classes.root}>
       <TextEditor onSaveClicked={onSaveClicked} />
-      <MarkdownRenderer markdown={markdown} />
     </div>
   );
 };
