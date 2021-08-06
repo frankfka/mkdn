@@ -6,9 +6,9 @@ import EndpointResult from '../../types/EndpointResult';
 import executeAsyncForResult from '../../util/executeAsyncForResult';
 import resultToEndpointResult from '../../util/resultToEndpointResult';
 
-type Data = {
+export type ApiPublishResponse = EndpointResult<{
   cid: string;
-};
+}>;
 
 const parseRequest = (body: any): PublishRequest | undefined => {
   if (!body || !body.filename || !body.markdown) {
@@ -27,7 +27,7 @@ const parseRequest = (body: any): PublishRequest | undefined => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EndpointResult<Data>>
+  res: NextApiResponse<ApiPublishResponse>
 ) {
   if (req.method !== 'POST') {
     sendInvalidRequestResponse(res);
@@ -42,7 +42,7 @@ export default async function handler(
     return;
   }
 
-  const publishResult = await executeAsyncForResult<Data>(async () => {
+  const publishResult = await executeAsyncForResult(async () => {
     const publishedCid = await pinMarkdownToIpfs(publishRequest);
     return {
       cid: publishedCid,

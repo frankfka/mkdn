@@ -1,13 +1,7 @@
 import { File, Web3Storage } from 'web3.storage';
+import MarkdownFileData from '../types/MarkdownFileData';
 
-type NftStorageUploadResponse = {
-  cid: string;
-};
-
-export type PublishRequest = {
-  filename: string;
-  markdown: string;
-};
+export type PublishRequest = MarkdownFileData;
 
 function makeStorageClient() {
   const storageToken = process.env.WEB3_STORAGE_KEY;
@@ -29,9 +23,9 @@ export const pinMarkdownToIpfs = async ({
   }
   const client = makeStorageClient();
 
-  const cid = await client.put([
-    new File([Buffer.from(markdown)], filename + '.md'),
-  ]);
+  const cid = await client.put([new File([Buffer.from(markdown)], filename)], {
+    wrapWithDirectory: false,
+  });
 
-  return cid + '/' + filename + '.md';
+  return cid;
 };
