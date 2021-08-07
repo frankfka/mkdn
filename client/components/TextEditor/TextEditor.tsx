@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // TODO:
-// Styling, image upload, other events
+// Styling, image upload, other events (ex. save)
+// TODO: Close warning (unsaved)
 // https://github.com/outline/rich-markdown-editor
 const TextEditor: React.FC<Props> = ({ getMarkdownRef }) => {
   const classes = useStyles();
