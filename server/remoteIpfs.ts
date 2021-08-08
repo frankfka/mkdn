@@ -1,8 +1,7 @@
 import { File, Web3Storage } from 'web3.storage';
 import MarkdownFileData from '../types/MarkdownFileData';
 
-export type PublishRequest = MarkdownFileData;
-
+// Creates a web3.storage client
 function makeStorageClient() {
   const storageToken = process.env.WEB3_STORAGE_KEY;
 
@@ -13,19 +12,24 @@ function makeStorageClient() {
   return new Web3Storage({ token: storageToken });
 }
 
-// Uploads Markdown to IPFS using nft.storage
-export const pinMarkdownToIpfs = async ({
+// Uploads Markdown to IPFS
+export type PublishRequest = MarkdownFileData;
+export const publishMarkdownToIpfs = async ({
   filename,
   markdown,
 }: PublishRequest): Promise<string> => {
   if (!filename || !markdown) {
     throw Error('Either filename or markdown is not defined');
   }
+
+  return uploadToIpfs(new File([Buffer.from(markdown)], filename));
+};
+
+// Uploads an arbitrary file to IPFS
+export const uploadToIpfs = async (file: File): Promise<string> => {
   const client = makeStorageClient();
 
-  const cid = await client.put([new File([Buffer.from(markdown)], filename)], {
+  return client.put([file], {
     wrapWithDirectory: false,
   });
-
-  return cid;
 };

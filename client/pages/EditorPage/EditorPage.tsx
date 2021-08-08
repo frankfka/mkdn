@@ -1,14 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
-import { makeStyles } from '@material-ui/core';
-import { saveAs } from 'file-saver';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  makeStyles,
+} from '@material-ui/core';
 import MarkdownFileData from '../../../types/MarkdownFileData';
+import { getCidGatewayUrl } from '../../../util/cidUtils';
+import {
+  checkUploadSize,
+  isImageMimeType,
+} from '../../../util/fileUploadUtils';
 import getValidMarkdownFilename from '../../../util/getValidMarkdownFilename';
 import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/BackdropLoadingScreen';
 
 import TextEditor from '../../components/TextEditor/TextEditor';
+import Toast, { ToastState } from '../../components/Toast/Toast';
 import callPublishApi from '../../util/api/callPublishApi';
-import createPostFetchInit from '../../util/createPostFetchInit';
+import callUploadApi from '../../util/api/callUploadApi';
 import downloadMarkdownFile from '../../util/downloadMarkdownFile';
 import { ActionName } from './EditorPageActions';
 import EditorPageActionsFab from './EditorPageActionsFab';
@@ -21,8 +34,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type EditorPageInfoDialogState = {
+  title?: string;
+  message: string;
+};
+
+// TODO: Keep track of uploaded CID's and delete if able
 const EditorPage = () => {
   const classes = useStyles();
+
+  // Info dialog state
+  const [infoDialogState, setInfoDialogState] =
+    useState<EditorPageInfoDialogState>();
+  const closeInfoDialog = useCallback(() => {
+    setInfoDialogState(undefined);
+  }, [setInfoDialogState]);
 
   // FAB open state
   const [openActionsFab, setOpenActionsFab] = useState(false);
@@ -49,6 +75,55 @@ const EditorPage = () => {
     };
   };
 
+  // Toast state
+  const [toastState, setToastState] = useState<ToastState>();
+  const onEditorShowToast = (message: string, type: 'error' | 'info') => {
+    setToastState({
+      message,
+      type,
+    });
+  };
+
+  // Images
+  const showImageInfoDialog = useCallback(() => {
+    setInfoDialogState({
+      title: 'Unsupported File',
+      message: 'We only support images up to 5mb. Please try again.',
+    });
+  }, [setInfoDialogState]);
+  const uploadImage = async (file: File): Promise<string> => {
+    if (!checkUploadSize(file.size)) {
+      showImageInfoDialog();
+      throw Error('File is too large');
+    }
+    if (!isImageMimeType(file.type)) {
+      showImageInfoDialog();
+      throw Error('Unsupported file type');
+    }
+
+    const uploadedCid = (await callUploadApi(file)).data?.cid;
+
+    if (uploadedCid) {
+      return getCidGatewayUrl(uploadedCid);
+    } else {
+      throw Error('No CID in upload API response');
+    }
+  };
+
+  const onImageUploadStart = () => {
+    setToastState({
+      type: 'info',
+      message: 'Uploading your image...',
+    });
+  };
+
+  const onImageUploadStop = () => {};
+
+  // Actions
+  const onEditorSaveRequested = () => {
+    setOpenActionsFab(true);
+  };
+
   const onActionClicked = async (actionName: ActionName) => {
     const markdownFileData = getMarkdownFile();
 
@@ -66,7 +141,10 @@ const EditorPage = () => {
         console.log('Published successfully', publishResult);
         setPublishedCid(publishResult.data.cid);
       } else {
-        // TODO show error toast
+        setToastState({
+          type: 'error',
+          message: 'Something went wrong during publishing. Please try again.',
+        });
       }
     }
   };
@@ -88,9 +166,28 @@ const EditorPage = () => {
         setIsOpen={setOpenActionsFab}
         onActionClicked={onActionClicked}
       />
+      <Toast state={toastState} setState={setToastState} />
+      <Dialog open={infoDialogState != null} onClose={closeInfoDialog}>
+        <DialogTitle>{infoDialogState?.title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{infoDialogState?.message}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeInfoDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/*Main editor*/}
-      <TextEditor getMarkdownRef={getMarkdownRef} />
+      <TextEditor
+        getMarkdownRef={getMarkdownRef}
+        uploadImage={uploadImage}
+        onImageUploadStart={onImageUploadStart}
+        onImageUploadStop={onImageUploadStop}
+        onSave={onEditorSaveRequested}
+        onShowToast={onEditorShowToast}
+      />
     </div>
   );
 };

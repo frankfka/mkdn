@@ -2,11 +2,20 @@ import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import { string } from 'prop-types';
 import React, { MutableRefObject, useCallback, useRef, useState } from 'react';
 
-import Editor from 'rich-markdown-editor';
+import Editor, { Props as EditorProps } from 'rich-markdown-editor';
 
 type Props = {
   getMarkdownRef: MutableRefObject<() => string>;
-};
+} & Partial<
+  Pick<
+    EditorProps,
+    | 'uploadImage'
+    | 'onImageUploadStart'
+    | 'onImageUploadStop'
+    | 'onSave'
+    | 'onShowToast'
+  >
+>;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,16 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO:
-// Styling, image upload, other events (ex. save)
+// TODO: Styling & copy
+// TODO: Save to local storage
 // TODO: Close warning (unsaved)
 // https://github.com/outline/rich-markdown-editor
-const TextEditor: React.FC<Props> = ({ getMarkdownRef }) => {
+const TextEditor: React.FC<Props> = ({ getMarkdownRef, ...editorProps }) => {
   const classes = useStyles();
   return (
     <Grid container direction="column" className={classes.root}>
       <Grid item className={classes.editorContainer} xs>
-        <Editor onChange={(fn) => (getMarkdownRef.current = fn)} />
+        <Editor
+          onChange={(fn) => (getMarkdownRef.current = fn)}
+          disableExtensions={['container_notice']}
+          {...editorProps}
+        />
       </Grid>
     </Grid>
   );

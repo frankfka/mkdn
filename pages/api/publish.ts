@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { pinMarkdownToIpfs } from '../../server/pinMarkdownToIpfs';
-import type { PublishRequest } from '../../server/pinMarkdownToIpfs';
+import { publishMarkdownToIpfs } from '../../server/remoteIpfs';
+import type { PublishRequest } from '../../server/remoteIpfs';
 import sendInvalidRequestResponse from '../../server/util/sendInvalidRequestResponse';
 import EndpointResult from '../../types/EndpointResult';
 import executeAsyncForResult from '../../util/executeAsyncForResult';
@@ -43,7 +43,7 @@ export default async function handler(
   }
 
   const publishResult = await executeAsyncForResult(async () => {
-    const publishedCid = await pinMarkdownToIpfs(publishRequest);
+    const publishedCid = await publishMarkdownToIpfs(publishRequest);
     return {
       cid: publishedCid,
     };
