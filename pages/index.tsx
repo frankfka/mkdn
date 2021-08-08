@@ -1,15 +1,13 @@
 import Head from 'next/head';
+import React from 'react';
 import EditorPage from '../client/pages/EditorPage/EditorPage';
 
 export default function Home() {
   return (
     <div>
       <Head>
-        <title>Markdown IPFS</title>
-        <meta name="description" content="Markdown IPFS" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>mkdn | Editor</title>
       </Head>
-
       <EditorPage />
     </div>
   );

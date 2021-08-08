@@ -1,3 +1,5 @@
+import Head from 'next/head';
+import React from 'react';
 import MarkdownViewerPage from '../../client/pages/MarkdownViewerPage/MarkdownViewerPage';
 
 import {
@@ -42,6 +44,9 @@ export default function MarkdownViewer({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
+      <Head>
+        <title>mkdn | Viewer</title>
+      </Head>
       <MarkdownViewerPage markdown={markdown} />
     </div>
   );

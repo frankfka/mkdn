@@ -37,6 +37,14 @@ class AppDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
             rel="stylesheet"
           />
+          <meta
+            name="description"
+            content="mkdn.link is a simple Markdown editor and publisher.
+            Create and share Markdown documents easily with image support.
+            All published documents are saved to IPFS
+            (the Interplanetary File System) for at least 30 days."
+          />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />

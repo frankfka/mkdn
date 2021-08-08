@@ -9,6 +9,10 @@ const fetchMarkdownFromIpfs = async (possibleCid: string): Promise<string> => {
 
   const fetchResp = await fetch(getCidGatewayUrl(possibleCid));
 
+  if (fetchResp.status !== 200) {
+    throw Error('Invalid status code');
+  }
+
   return fetchResp.text();
 };
 

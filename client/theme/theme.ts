@@ -1,5 +1,5 @@
 import { createTheme } from '@material-ui/core';
-import deepOrange from '@material-ui/core/colors/deepOrange';
+import deepPurple from '@material-ui/core/colors/deepPurple';
 import { white } from 'colorette';
 
 const theme = createTheme({
@@ -8,7 +8,7 @@ const theme = createTheme({
       main: '#000',
     },
     secondary: {
-      main: deepOrange['A400'],
+      main: deepPurple['500'],
     },
     background: {
       default: 'white',
