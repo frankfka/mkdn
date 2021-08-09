@@ -61,7 +61,7 @@ const EditorPage = () => {
   const showPublishSuccessDialog = !!publishedCid;
   const closePublishSuccessDialog = () => setPublishedCid('');
 
-  // Editor state
+  // Editor state (TODO - lift out into a hook to have autosave!)
   const [filename, setFileName] = useState('Untitled');
   const getMarkdownRef = useRef<() => string>(() => '');
 
