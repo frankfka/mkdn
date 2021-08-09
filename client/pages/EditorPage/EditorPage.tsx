@@ -20,6 +20,7 @@ import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/Backdr
 
 import TextEditor from '../../components/TextEditor/TextEditor';
 import Toast, { ToastState } from '../../components/Toast/Toast';
+import { useEditorContext } from '../../context/EditorContext';
 import callPublishApi from '../../util/api/callPublishApi';
 import callUploadApi from '../../util/api/callUploadApi';
 import downloadMarkdownFile from '../../util/downloadMarkdownFile';
@@ -39,7 +40,6 @@ type EditorPageInfoDialogState = {
   message: string;
 };
 
-// TODO: Keep track of uploaded CID's and delete if able
 const EditorPage = () => {
   const classes = useStyles();
 
@@ -61,19 +61,8 @@ const EditorPage = () => {
   const showPublishSuccessDialog = !!publishedCid;
   const closePublishSuccessDialog = () => setPublishedCid('');
 
-  // Editor state (TODO - lift out into a hook to have autosave!)
-  const [filename, setFileName] = useState('Untitled');
-  const getMarkdownRef = useRef<() => string>(() => '');
-
-  const getMarkdownFile = (): MarkdownFileData => {
-    const markdown = getMarkdownRef.current();
-    const processedFilename = getValidMarkdownFilename(filename);
-
-    return {
-      filename: processedFilename,
-      markdown,
-    };
-  };
+  // Editor context
+  const editorContext = useEditorContext();
 
   // Toast state
   const [toastState, setToastState] = useState<ToastState>();
@@ -101,13 +90,7 @@ const EditorPage = () => {
       throw Error('Unsupported file type');
     }
 
-    const uploadedCid = (await callUploadApi(file)).data?.cid;
-
-    if (uploadedCid) {
-      return getCidGatewayUrl(uploadedCid);
-    } else {
-      throw Error('No CID in upload API response');
-    }
+    return getCidGatewayUrl(await editorContext.uploadImage(file));
   };
 
   const onImageUploadStart = () => {
@@ -125,27 +108,24 @@ const EditorPage = () => {
   };
 
   const onActionClicked = async (actionName: ActionName) => {
-    const markdownFileData = getMarkdownFile();
-
     if (actionName === 'Download') {
-      downloadMarkdownFile(markdownFileData);
+      editorContext.downloadMarkdown();
     } else if (actionName === 'Publish') {
       // Start loading
       setShowFullScreenLoading(true);
 
-      const publishResult = await callPublishApi(markdownFileData);
-
-      setShowFullScreenLoading(false);
-
-      if (publishResult?.data?.cid) {
-        console.log('Published successfully', publishResult);
-        setPublishedCid(publishResult.data.cid);
-      } else {
+      try {
+        const publishedCid = await editorContext.publishMarkdown();
+        console.log('Published successfully', publishedCid);
+        setPublishedCid(publishedCid);
+      } catch (err) {
         setToastState({
           type: 'error',
           message: 'Something went wrong during publishing. Please try again.',
         });
       }
+
+      setShowFullScreenLoading(false);
     }
   };
 
@@ -160,7 +140,7 @@ const EditorPage = () => {
       />
 
       {/*Editor peripherals*/}
-      <EditorPageTopBar fileName={filename} onFileNameChanged={setFileName} />
+      <EditorPageTopBar />
       <EditorPageActionsFab
         open={openActionsFab}
         setIsOpen={setOpenActionsFab}
@@ -180,14 +160,17 @@ const EditorPage = () => {
       </Dialog>
 
       {/*Main editor*/}
-      <TextEditor
-        getMarkdownRef={getMarkdownRef}
-        uploadImage={uploadImage}
-        onImageUploadStart={onImageUploadStart}
-        onImageUploadStop={onImageUploadStop}
-        onSave={onEditorSaveRequested}
-        onShowToast={onEditorShowToast}
-      />
+      {editorContext.isInitialized && (
+        <TextEditor
+          getMarkdownRef={editorContext.getEditorValue}
+          initialContent={editorContext.savedEditorState?.markdown}
+          uploadImage={uploadImage}
+          onImageUploadStart={onImageUploadStart}
+          onImageUploadStop={onImageUploadStop}
+          onSave={onEditorSaveRequested}
+          onShowToast={onEditorShowToast}
+        />
+      )}
     </div>
   );
 };

@@ -17,14 +17,11 @@ const useStyles = makeStyles((theme) => ({
 const MarkdownRenderer: React.FC<Props> = ({ markdown }) => {
   const classes = useStyles();
 
-  // Escape backslash newline with newline
-  const markdownToRender = markdown.replace(/\\\n/gi, '\n \n');
-
   return (
     <div>
       <Container className={classes.markdownContainer}>
         <ReactMarkdown remarkPlugins={[gfm]} className="markdown-body">
-          {markdownToRender}
+          {markdown}
         </ReactMarkdown>
       </Container>
     </div>

@@ -14,11 +14,9 @@ import {
 import React from 'react';
 
 import AppLogo from '../../../public/mkdn-logo.svg';
+import { useEditorContext } from '../../context/EditorContext';
 
-type Props = {
-  fileName: string;
-  onFileNameChanged(val: string): void;
-};
+type Props = {};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,8 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const EditorPageTopBar: React.FC<Props> = ({ fileName, onFileNameChanged }) => {
+const EditorPageTopBar: React.FC<Props> = () => {
   const classes = useStyles();
+
+  // Editor context
+  const editorContext = useEditorContext();
 
   return (
     <div className={classes.root}>
@@ -52,8 +53,10 @@ const EditorPageTopBar: React.FC<Props> = ({ fileName, onFileNameChanged }) => {
             </Grid>
             <Grid item xs>
               <TextField
-                value={fileName}
-                onChange={(e) => onFileNameChanged(e.currentTarget.value)}
+                value={editorContext.fileName}
+                onChange={(e) =>
+                  editorContext.setFileName(e.currentTarget.value)
+                }
                 placeholder="File Name"
                 className={classes.fileNameTextField}
                 inputProps={{
