@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
+import Footer from '../../client/components/Footer/Footer';
 import MarkdownViewerPage from '../../client/pages/MarkdownViewerPage/MarkdownViewerPage';
 
 import {
@@ -48,6 +49,7 @@ export default function MarkdownViewer({
         <title>mkdn | Viewer</title>
       </Head>
       <MarkdownViewerPage markdown={markdown} />
+      <Footer />
     </div>
   );
 }

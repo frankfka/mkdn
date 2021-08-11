@@ -9,21 +9,16 @@ import {
   DialogTitle,
   makeStyles,
 } from '@material-ui/core';
-import MarkdownFileData from '../../../types/MarkdownFileData';
 import { getCidGatewayUrl } from '../../../util/cidUtils';
 import {
   checkUploadSize,
   isImageMimeType,
 } from '../../../util/fileUploadUtils';
-import getValidMarkdownFilename from '../../../util/getValidMarkdownFilename';
 import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/BackdropLoadingScreen';
 
 import TextEditor from '../../components/TextEditor/TextEditor';
 import Toast, { ToastState } from '../../components/Toast/Toast';
 import { useEditorContext } from '../../context/EditorContext';
-import callPublishApi from '../../util/api/callPublishApi';
-import callUploadApi from '../../util/api/callUploadApi';
-import downloadMarkdownFile from '../../util/downloadMarkdownFile';
 import { ActionName } from './EditorPageActions';
 import EditorPageActionsFab from './EditorPageActionsFab';
 import EditorPageTopBar from './EditorPageTopBar';
@@ -140,7 +135,6 @@ const EditorPage = () => {
       />
 
       {/*Editor peripherals*/}
-      <EditorPageTopBar />
       <EditorPageActionsFab
         open={openActionsFab}
         setIsOpen={setOpenActionsFab}
@@ -160,6 +154,7 @@ const EditorPage = () => {
       </Dialog>
 
       {/*Main editor*/}
+      <EditorPageTopBar />
       {editorContext.isInitialized && (
         <TextEditor
           getMarkdownRef={editorContext.getEditorValue}
