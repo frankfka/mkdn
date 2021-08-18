@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/markdown-ipfs.iml" filepath="$PROJECT_DIR$/.idea/markdown-ipfs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mkdn.iml" filepath="$PROJECT_DIR$/.idea/mkdn.iml" />
     </modules>
   </component>
 </project>
