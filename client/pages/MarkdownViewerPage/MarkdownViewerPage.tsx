@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Image from 'next/image';
 import React from 'react';
 import AppLogo from '../../../public/mkdn-logo.svg';
+import CenteredInfoContainer from '../../components/CenteredInfoContainer/CenteredInfoContainer';
 import MarkdownRenderer from '../../components/MarkdownRenderer/MarkdownRenderer';
 
 type Props = {
@@ -25,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     backgroundColor: theme.palette.common.white,
   },
-  noContentContainer: {
+  contentContainer: {
     minHeight: '80vh',
-    display: 'flex',
-    alignContent: 'center',
-  },
-  noContentTextContainer: {
-    margin: 'auto',
+    // Padding
+    padding: theme.spacing(4, 4),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4, 8),
+    },
   },
 }));
 
@@ -67,20 +68,16 @@ const MarkdownViewerTopBar: React.FC = () => {
 };
 
 const NoContentView: React.FC = () => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.noContentContainer}>
-      <div className={classes.noContentTextContainer}>
-        <Typography variant="h2" align="center">
-          No Content 😢
-        </Typography>
-        <Typography variant="subtitle1" align="center">
-          If you were expecting content to be rendered, double check the IPFS
-          hash in the URL.
-        </Typography>
-      </div>
-    </div>
+    <CenteredInfoContainer>
+      <Typography variant="h3" align="center" paragraph>
+        No Content 😢
+      </Typography>
+      <Typography variant="subtitle1" align="center">
+        If you were expecting content to be rendered, double check the IPFS hash
+        in the URL.
+      </Typography>
+    </CenteredInfoContainer>
   );
 };
 
@@ -89,7 +86,13 @@ const MarkdownViewerPage: React.FC<Props> = ({ markdown }) => {
   return (
     <div className={classes.root}>
       <MarkdownViewerTopBar />
-      {markdown ? <MarkdownRenderer markdown={markdown} /> : <NoContentView />}
+      <div className={classes.contentContainer}>
+        {markdown ? (
+          <MarkdownRenderer markdown={markdown} />
+        ) : (
+          <NoContentView />
+        )}
+      </div>
     </div>
   );
 };

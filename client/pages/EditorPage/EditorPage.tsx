@@ -16,7 +16,7 @@ import {
 } from '../../../util/fileUploadUtils';
 import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/BackdropLoadingScreen';
 
-import TextEditor from '../../components/TextEditor/TextEditor';
+import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 import Toast, { ToastState } from '../../components/Toast/Toast';
 import { useEditorContext } from '../../context/EditorContext';
 import { ActionName } from './EditorPageActions';
@@ -156,7 +156,7 @@ const EditorPage = () => {
       {/*Main editor*/}
       <EditorPageTopBar />
       {editorContext.isInitialized && (
-        <TextEditor
+        <MarkdownEditor
           getMarkdownRef={editorContext.getEditorValue}
           initialContent={editorContext.savedEditorState?.markdown}
           uploadImage={uploadImage}

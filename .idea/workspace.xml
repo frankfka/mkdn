@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af44a07c-3c48-4739-8ea0-bb57c738632b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mkdn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mkdn.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/AppPage/AppPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/CenteredInfoContainer/CenteredInfoContainer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/ErrorView/ErrorView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/LoadingView/LoadingView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/NavBar/NavBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/SpacingContainer/SpacingContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/MarkdownRenderer/MarkdownRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/MarkdownRenderer/MarkdownRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/TextEditor/TextEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/MarkdownEditor/MarkdownEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/EditorPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/EditorPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/MarkdownViewerPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/MarkdownViewerPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/GithubMarkdown.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +46,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -48,6 +57,28 @@
     <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/components" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -63,11 +94,24 @@
       <workItem from="1629074573845" duration="25000" />
       <workItem from="1629090337550" duration="1219000" />
       <workItem from="1629124907138" duration="1303000" />
+      <workItem from="1629299517761" duration="357000" />
+      <workItem from="1629396265035" duration="1456000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

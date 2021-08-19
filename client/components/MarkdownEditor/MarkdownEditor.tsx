@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 // TODO: Save to local storage
 // TODO: Close warning (unsaved)
 // https://github.com/outline/rich-markdown-editor
-const TextEditor: React.FC<Props> = ({
+const MarkdownEditor: React.FC<Props> = ({
   getMarkdownRef,
   initialContent,
   ...editorProps
@@ -60,4 +60,4 @@ const TextEditor: React.FC<Props> = ({
   );
 };
 
-export default TextEditor;
+export default MarkdownEditor;

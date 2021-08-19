@@ -3,9 +3,6 @@ import type { AppProps } from 'next/app';
 
 import theme from '../client/theme/theme';
 
-// Markdown rendering stylesheet
-import '../client/styles/GithubMarkdown.css';
-
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
