@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { publishMarkdownToIpfs } from '../../server/remoteIpfs';
-import type { PublishRequest } from '../../server/remoteIpfs';
+import { publishMarkdownToIpfs } from '../../server/uploadToIpfs';
+import type { PublishRequest } from '../../server/uploadToIpfs';
 import sendInvalidRequestResponse from '../../server/util/sendInvalidRequestResponse';
 import EndpointResult from '../../types/EndpointResult';
 import executeAsyncForResult from '../../util/executeAsyncForResult';
@@ -11,11 +11,11 @@ export type ApiPublishResponse = EndpointResult<{
 }>;
 
 const parseRequest = (body: any): PublishRequest | undefined => {
-  if (!body || !body.filename || !body.markdown) {
+  if (!body) {
     return;
   }
 
-  if (typeof body.filename !== 'string' || typeof body.markdown !== 'string') {
+  if (typeof body.markdown !== 'string') {
     return;
   }
 

@@ -14,21 +14,19 @@ import {
   checkUploadSize,
   isImageMimeType,
 } from '../../../util/fileUploadUtils';
+import AppPage from '../../components/AppPage/AppPage';
 import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/BackdropLoadingScreen';
+import InfoDialog from '../../components/InfoDialog/InfoDialog';
 
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 import Toast, { ToastState } from '../../components/Toast/Toast';
 import { useEditorContext } from '../../context/EditorContext';
-import { ActionName } from './EditorPageActions';
-import EditorPageActionsFab from './EditorPageActionsFab';
-import EditorPageTopBar from './EditorPageTopBar';
-import PublishSuccessDialog from './PublishSuccessDialog/PublishSuccessDialog';
+import { ActionName } from './components/EditorPageActions';
+import EditorPageActionsFab from './components/EditorPageActionsFab';
+import EditorPageDownloadDialog from './components/EditorPageDownloadDialog';
+import PublishSuccessDialog from './components/PublishSuccessDialog';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '100vh',
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 type EditorPageInfoDialogState = {
   title?: string;
@@ -44,6 +42,7 @@ const EditorPage = () => {
   const closeInfoDialog = useCallback(() => {
     setInfoDialogState(undefined);
   }, [setInfoDialogState]);
+  const isInfoDialogOpen = infoDialogState != null;
 
   // FAB open state
   const [openActionsFab, setOpenActionsFab] = useState(false);
@@ -55,6 +54,9 @@ const EditorPage = () => {
   const [publishedCid, setPublishedCid] = useState('');
   const showPublishSuccessDialog = !!publishedCid;
   const closePublishSuccessDialog = () => setPublishedCid('');
+
+  // Download dialog
+  const [showDownloadDialog, setShowDownloadDialog] = useState(false);
 
   // Editor context
   const editorContext = useEditorContext();
@@ -95,7 +97,9 @@ const EditorPage = () => {
     });
   };
 
-  const onImageUploadStop = () => {};
+  const onImageUploadStop = () => {
+    // TODO: Success or error
+  };
 
   // Actions
   const onEditorSaveRequested = () => {
@@ -104,7 +108,8 @@ const EditorPage = () => {
 
   const onActionClicked = async (actionName: ActionName) => {
     if (actionName === 'Download') {
-      editorContext.downloadMarkdown();
+      // Show download dialog
+      setShowDownloadDialog(true);
     } else if (actionName === 'Publish') {
       // Start loading
       setShowFullScreenLoading(true);
@@ -125,7 +130,7 @@ const EditorPage = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <AppPage>
       {/*Loading / dialogs*/}
       <BackdropLoadingScreen isOpen={showFullScreenLoading} />
       <PublishSuccessDialog
@@ -134,27 +139,31 @@ const EditorPage = () => {
         closeDialog={closePublishSuccessDialog}
       />
 
-      {/*Editor peripherals*/}
+      {/*Editor FAB*/}
       <EditorPageActionsFab
         open={openActionsFab}
         setIsOpen={setOpenActionsFab}
         onActionClicked={onActionClicked}
       />
+
+      {/*Toast*/}
       <Toast state={toastState} setState={setToastState} />
-      <Dialog open={infoDialogState != null} onClose={closeInfoDialog}>
-        <DialogTitle>{infoDialogState?.title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{infoDialogState?.message}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeInfoDialog} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+      {/*Info Dialog*/}
+      <InfoDialog
+        isOpen={isInfoDialogOpen}
+        closeDialog={closeInfoDialog}
+        title={infoDialogState?.title}
+        message={infoDialogState?.message}
+      />
+
+      {/*Download Dialog*/}
+      <EditorPageDownloadDialog
+        open={showDownloadDialog}
+        setOpen={setShowDownloadDialog}
+      />
 
       {/*Main editor*/}
-      <EditorPageTopBar />
       {editorContext.isInitialized && (
         <MarkdownEditor
           getMarkdownRef={editorContext.getEditorValue}
@@ -166,7 +175,7 @@ const EditorPage = () => {
           onShowToast={onEditorShowToast}
         />
       )}
-    </div>
+    </AppPage>
   );
 };
 

@@ -1,5 +1,5 @@
 import { ApiPublishResponse } from '../../../pages/api/publish';
-import { PublishRequest } from '../../../server/remoteIpfs';
+import { PublishRequest } from '../../../server/uploadToIpfs';
 import createPostFetchInit from '../createPostFetchInit';
 
 const callPublishApi = async (

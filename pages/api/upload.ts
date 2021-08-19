@@ -1,7 +1,8 @@
-import { getFilesFromPath } from 'web3.storage';
+import formidable from 'formidable';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { uploadToIpfs } from '../../server/remoteIpfs';
+import { getFilesFromPath } from 'web3.storage';
+import { uploadToIpfs } from '../../server/uploadToIpfs';
 import sendInvalidRequestResponse from '../../server/util/sendInvalidRequestResponse';
 import EndpointResult from '../../types/EndpointResult';
 import executeAsyncForResult from '../../util/executeAsyncForResult';
@@ -11,7 +12,6 @@ import {
   MAX_UPLOAD_SIZE,
 } from '../../util/fileUploadUtils';
 import resultToEndpointResult from '../../util/resultToEndpointResult';
-import formidable from 'formidable';
 
 export type ApiUploadResponse = EndpointResult<{
   cid: string;

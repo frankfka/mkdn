@@ -1,5 +1,7 @@
+import { nanoid } from 'nanoid';
 import { File, Web3Storage } from 'web3.storage';
 import MarkdownFileData from '../types/MarkdownFileData';
+import getValidMarkdownFilename from '../util/getValidMarkdownFilename';
 
 // Creates a web3.storage client
 function makeStorageClient() {
@@ -18,11 +20,12 @@ export const publishMarkdownToIpfs = async ({
   filename,
   markdown,
 }: PublishRequest): Promise<string> => {
-  if (!filename || !markdown) {
-    throw Error('Either filename or markdown is not defined');
-  }
+  // Create a file name if none was given
+  const validFileName = filename ? filename : nanoid(5);
 
-  return uploadToIpfs(new File([Buffer.from(markdown)], filename));
+  return uploadToIpfs(
+    new File([Buffer.from(markdown)], getValidMarkdownFilename(validFileName))
+  );
 };
 
 // Uploads an arbitrary file to IPFS

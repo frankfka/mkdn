@@ -5,25 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af44a07c-3c48-4739-8ea0-bb57c738632b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/components/AppPage/AppPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/components/CenteredInfoContainer/CenteredInfoContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/components/ErrorView/ErrorView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/components/LoadingView/LoadingView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/components/NavBar/NavBar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/components/SpacingContainer/SpacingContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/components/MarkdownRenderer/MarkdownRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/MarkdownRenderer/MarkdownRenderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/components/TextEditor/TextEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/MarkdownEditor/MarkdownEditor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/EditorPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/EditorPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/MarkdownViewerPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/MarkdownViewerPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/styles/GithubMarkdown.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/upload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/upload.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,14 +48,19 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v16.3.0/bin/node" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="optimize.imports.on.save" value="true" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="rearrange.code.on.save" value="true" />
+    <property name="settings.editor.selected.configurable" value="actions.on.save" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/client/components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/pages/EditorPage/components" />
     </key>
   </component>
   <component name="RunManager">
@@ -95,7 +95,7 @@
       <workItem from="1629090337550" duration="1219000" />
       <workItem from="1629124907138" duration="1303000" />
       <workItem from="1629299517761" duration="357000" />
-      <workItem from="1629396265035" duration="1456000" />
+      <workItem from="1629396265035" duration="10457000" />
     </task>
     <servers />
   </component>

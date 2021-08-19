@@ -1,5 +1,5 @@
-import { Box, Button, Grid, makeStyles } from '@material-ui/core';
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core';
+import React, { MutableRefObject } from 'react';
 
 import Editor, { Props as EditorProps } from 'rich-markdown-editor';
 
@@ -17,26 +17,8 @@ type Props = {
   >
 >;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(4),
-    height: '100%',
-  },
-  topBar: {
-    margin: theme.spacing(2),
-  },
-  saveButton: {
-    marginLeft: 'auto', // Right align
-  },
-  editorContainer: {
-    padding: theme.spacing(4),
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
-// TODO: Styling & copy
-// TODO: Save to local storage
-// TODO: Close warning (unsaved)
-// https://github.com/outline/rich-markdown-editor
 const MarkdownEditor: React.FC<Props> = ({
   getMarkdownRef,
   initialContent,
@@ -45,18 +27,14 @@ const MarkdownEditor: React.FC<Props> = ({
   const classes = useStyles();
 
   return (
-    <Grid container direction="column" className={classes.root}>
-      <Grid item className={classes.editorContainer} xs>
-        <Editor
-          id="mkdn"
-          onChange={(fn) => (getMarkdownRef.current = fn)}
-          disableExtensions={['container_notice']}
-          placeholder="The page looks a bit bare..."
-          defaultValue={initialContent}
-          {...editorProps}
-        />
-      </Grid>
-    </Grid>
+    <Editor
+      id="mkdn"
+      onChange={(fn) => (getMarkdownRef.current = fn)}
+      disableExtensions={['container_notice']}
+      placeholder="The page looks a bit bare..."
+      defaultValue={initialContent}
+      {...editorProps}
+    />
   );
 };
 

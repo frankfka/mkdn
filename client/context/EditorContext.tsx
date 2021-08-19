@@ -40,11 +40,11 @@ export const EditorContext = createContext<EditorContextData>({
   getEditorValue: { current: () => '' },
   isInitialized: false,
   downloadMarkdown(): void {},
-  publishMarkdown(): Promise<string> {
-    return Promise.resolve('');
+  async publishMarkdown() {
+    return '';
   },
-  uploadImage(file: File): Promise<string> {
-    return Promise.resolve('');
+  async uploadImage() {
+    return '';
   },
 });
 

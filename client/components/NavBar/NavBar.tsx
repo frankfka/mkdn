@@ -1,74 +1,52 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  createStyles,
-  makeStyles,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
+import { AppBar, Button, makeStyles, Toolbar } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 
-import AppLogo from '../../../public/packet_logo.svg';
+import AppLogo from '../../../public/mkdn-logo.svg';
+import SpacingContainer from '../SpacingContainer/SpacingContainer';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: '100vh',
+  },
+  toolbar: {
+    backgroundColor: theme.palette.common.white,
+  },
+  contentContainer: {
+    minHeight: '80vh',
+    // Padding
+    padding: theme.spacing(4, 4),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4, 8),
     },
-    logoContainer: {
-      cursor: 'pointer',
-      flexGrow: 1,
-    },
-  })
-);
+  },
+}));
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   const classes = useStyles();
-  const router = useRouter();
-
-  const isRegistryPage = router.pathname.startsWith('/registry');
-  const isIntakePage = router.pathname.startsWith('/intake');
 
   return (
     <>
-      <AppBar color="default">
-        <Toolbar>
-          <Link href="/">
-            <Box
-              className={classes.logoContainer}
-              display="flex"
-              alignItems="center"
-            >
-              <Image src={AppLogo} height={36} width={36} alt="Packet Logo" />
-              <Box ml={1}>
-                <Typography variant="h6">Packet</Typography>
-              </Box>
-            </Box>
-          </Link>
+      <AppBar position="fixed" color="transparent">
+        <Toolbar className={classes.toolbar}>
+          <SpacingContainer justifyContent="space-between">
+            {/*Logo*/}
+            <Image src={AppLogo} height={36} width={96} alt="mkdn Logo" />
 
-          <Link href="/registry" passHref>
-            <Button
-              variant="text"
-              color={isRegistryPage ? 'secondary' : 'primary'}
-            >
-              <Box fontWeight={isRegistryPage ? 'bold' : undefined}>
-                Registry
-              </Box>
-            </Button>
-          </Link>
-
-          <Link href="/intake" passHref>
-            <Button
-              variant="text"
-              color={isIntakePage ? 'secondary' : 'primary'}
-            >
-              <Box fontWeight={isIntakePage ? 'bold' : undefined}>Intake</Box>
-            </Button>
-          </Link>
+            {/*Right buttons*/}
+            <div>
+              <Button
+                variant="outlined"
+                color="primary"
+                target="_blank"
+                href="/"
+                startIcon={<AddIcon />}
+              >
+                New
+              </Button>
+            </div>
+          </SpacingContainer>
         </Toolbar>
       </AppBar>
       <Toolbar />

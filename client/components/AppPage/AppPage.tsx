@@ -11,7 +11,12 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     height: '100%',
-    padding: theme.spacing(5, 10, 10, 10),
+    minHeight: '80vh',
+    // Padding
+    padding: theme.spacing(4, 4),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4, 8),
+    },
   },
 }));
 
