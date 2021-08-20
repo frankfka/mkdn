@@ -1,13 +1,13 @@
-import Head from 'next/head';
-import React from 'react';
-import Footer from '../../client/components/Footer/Footer';
-import MarkdownViewerPage from '../../client/pages/MarkdownViewerPage/MarkdownViewerPage';
-
 import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
   InferGetServerSidePropsType,
 } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React from 'react';
+import MarkdownViewerPage from '../../client/pages/MarkdownViewerPage/MarkdownViewerPage';
+import isCid from '../../client/util/isCid';
 import fetchMarkdownFromIpfs from '../../server/fetchMarkdownFromIpfs';
 
 type Props = {
@@ -20,7 +20,7 @@ export const getServerSideProps = async ({
   let markdown = '';
 
   const { markdownCid } = query;
-  if (markdownCid && typeof markdownCid === 'string') {
+  if (markdownCid && typeof markdownCid === 'string' && isCid(markdownCid)) {
     try {
       markdown = await fetchMarkdownFromIpfs(markdownCid);
     } catch (e) {
@@ -43,13 +43,15 @@ export const getServerSideProps = async ({
 export default function MarkdownViewer({
   markdown,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { markdownCid } = useRouter().query;
+  const cid = typeof markdownCid === 'string' ? markdownCid : undefined;
+
   return (
     <div>
       <Head>
         <title>mkdn | Viewer</title>
       </Head>
-      <MarkdownViewerPage markdown={markdown} />
-      <Footer />
+      <MarkdownViewerPage markdown={markdown} cid={cid} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
-import { AppBar, Button, makeStyles, Toolbar } from '@material-ui/core';
+import { AppBar, Button, Link, makeStyles, Toolbar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import SubjectOutlinedIcon from '@material-ui/icons/SubjectOutlined';
 import Image from 'next/image';
 import React from 'react';
 
@@ -32,20 +33,31 @@ const NavBar: React.FC = () => {
         <Toolbar className={classes.toolbar}>
           <SpacingContainer justifyContent="space-between">
             {/*Logo*/}
-            <Image src={AppLogo} height={36} width={96} alt="mkdn Logo" />
+            <Link href="/">
+              <Image src={AppLogo} height={36} width={96} alt="mkdn Logo" />
+            </Link>
 
             {/*Right buttons*/}
-            <div>
+            <SpacingContainer>
               <Button
                 variant="outlined"
+                color="primary"
+                target="_blank"
+                href="/viewer"
+                startIcon={<SubjectOutlinedIcon />}
+              >
+                View
+              </Button>
+              <Button
+                variant="contained"
                 color="primary"
                 target="_blank"
                 href="/"
                 startIcon={<AddIcon />}
               >
-                New
+                Create
               </Button>
-            </div>
+            </SpacingContainer>
           </SpacingContainer>
         </Toolbar>
       </AppBar>

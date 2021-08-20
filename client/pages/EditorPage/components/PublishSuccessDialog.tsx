@@ -6,11 +6,8 @@ import {
   DialogContent,
   DialogTitle,
   Link,
-  IconButton,
-  TextField,
-  Typography,
-  Grid,
   makeStyles,
+  Typography,
 } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import React from 'react';
@@ -51,24 +48,31 @@ const PublishSuccessDialog: React.FC<Props> = ({
             (IPFS). It will be persisted for at least 30 days.{' '}
             <Typography variant="caption">
               <Link
-                color="secondary"
                 href="https://docs.ipfs.io/concepts/what-is-ipfs/#what-is-ipfs"
                 target="_blank"
+                underline="always"
               >
-                Learn more about IPFS.
+                Learn more about IPFS
               </Link>
             </Typography>
           </Typography>
-          <TextFieldWithCopy value={cid} readonly fullWidth label="CID" />
+          <TextFieldWithCopy
+            value={cid}
+            readonly
+            fullWidth
+            label="CID"
+            variant="outlined"
+          />
           <TextFieldWithCopy
             value={getCidGatewayUrl(cid)}
             readonly
             fullWidth
             label="Link to File"
+            variant="outlined"
           />
           <Box textAlign="center">
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               href={getViewerUrlFromCid(cid)}
               target="_blank"

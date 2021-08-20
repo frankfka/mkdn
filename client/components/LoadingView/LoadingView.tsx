@@ -7,7 +7,7 @@ type Props = Partial<BoxProps>;
 const LoadingView: React.FC<Props> = (props) => {
   return (
     <CenteredInfoContainer {...props}>
-      <CircularProgress color="secondary" />
+      <CircularProgress color="primary" />
     </CenteredInfoContainer>
   );
 };

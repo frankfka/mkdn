@@ -1,14 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
-
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  makeStyles,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import React, { useCallback, useState } from 'react';
 import { getCidGatewayUrl } from '../../../util/cidUtils';
 import {
   checkUploadSize,

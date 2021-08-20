@@ -1,5 +1,6 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
+import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 
 type Props = {};
@@ -24,10 +25,13 @@ const AppPage: React.FC<Props> = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
-      <NavBar />
-      <Box className={classes.content}>{children}</Box>
-    </Box>
+    <>
+      <Box className={classes.root}>
+        <NavBar />
+        <Box className={classes.content}>{children}</Box>
+      </Box>
+      <Footer />
+    </>
   );
 };
 
