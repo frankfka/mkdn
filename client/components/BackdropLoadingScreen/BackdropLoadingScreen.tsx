@@ -13,7 +13,7 @@ type Props = {
 const useStyles = makeStyles((theme) =>
   createStyles({
     backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
+      zIndex: theme.zIndex.appBar + 1,
       color: theme.palette.common.white,
     },
   })

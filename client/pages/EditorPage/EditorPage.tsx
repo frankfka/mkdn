@@ -1,4 +1,6 @@
 import { makeStyles } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+import ShareIcon from '@material-ui/icons/Share';
 import React, { useCallback, useState } from 'react';
 import { getCidGatewayUrl } from '../../../util/cidUtils';
 import {
@@ -10,10 +12,11 @@ import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/Backdr
 import InfoDialog from '../../components/InfoDialog/InfoDialog';
 
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
+import SpeedDialFab, {
+  SpeedDialAction,
+} from '../../components/SpeedDialFab/SpeedDialFab';
 import Toast, { ToastState } from '../../components/Toast/Toast';
 import { useEditorContext } from '../../context/EditorContext';
-import { ActionName } from './components/EditorPageActions';
-import EditorPageActionsFab from './components/EditorPageActionsFab';
 import EditorPageDownloadDialog from './components/EditorPageDownloadDialog';
 import PublishSuccessDialog from './components/PublishSuccessDialog';
 
@@ -23,6 +26,13 @@ type EditorPageInfoDialogState = {
   title?: string;
   message: string;
 };
+
+type EditorPageSpeedDialActionName = 'Publish' | 'Download';
+export const editorPageSpeedDialActions: SpeedDialAction<EditorPageSpeedDialActionName>[] =
+  [
+    { icon: <SaveIcon />, name: 'Download' },
+    { icon: <ShareIcon />, name: 'Publish' },
+  ];
 
 const EditorPage = () => {
   const classes = useStyles();
@@ -97,7 +107,7 @@ const EditorPage = () => {
     setOpenActionsFab(true);
   };
 
-  const onActionClicked = async (actionName: ActionName) => {
+  const onActionClicked = async (actionName: EditorPageSpeedDialActionName) => {
     if (actionName === 'Download') {
       // Show download dialog
       setShowDownloadDialog(true);
@@ -131,7 +141,8 @@ const EditorPage = () => {
       />
 
       {/*Editor FAB*/}
-      <EditorPageActionsFab
+      <SpeedDialFab
+        actions={editorPageSpeedDialActions}
         open={openActionsFab}
         setIsOpen={setOpenActionsFab}
         onActionClicked={onActionClicked}

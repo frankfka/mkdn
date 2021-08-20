@@ -1,28 +1,22 @@
+import { createStyles, makeStyles } from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import React from 'react';
 
-import {
-  Backdrop,
-  Button,
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
-import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ShareIcon from '@material-ui/icons/Share';
-import SaveIcon from '@material-ui/icons/Save';
+export type SpeedDialAction<TName extends string> = {
+  icon: React.ReactNode;
+  name: TName;
+};
 
-import { ActionConfig, ActionName } from './EditorPageActions';
-
-type Props = {
+export type SpeedDialFabProps<TName extends string> = {
+  actions: SpeedDialAction<TName>[];
+  onActionClicked(actionName: TName): void | Promise<void>;
   open: boolean;
   setIsOpen(val: boolean): void;
-  onActionClicked(actionName: ActionName): void;
 };
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {},
     speedDial: {
       position: 'fixed',
       bottom: theme.spacing(4),
@@ -31,16 +25,12 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export const actions: ActionConfig[] = [
-  { icon: <SaveIcon />, name: 'Download' },
-  { icon: <ShareIcon />, name: 'Publish' },
-];
-
-const EditorPageActionsFab: React.FC<Props> = ({
+const SpeedDialFab = <TName extends string>({
   open,
   setIsOpen,
   onActionClicked,
-}) => {
+  actions,
+}: React.PropsWithChildren<SpeedDialFabProps<TName>>) => {
   const classes = useStyles();
 
   const handleOpen = () => {
@@ -51,14 +41,14 @@ const EditorPageActionsFab: React.FC<Props> = ({
     setIsOpen(false);
   };
 
-  const onActionIconClicked = (action: ActionConfig) => {
+  const onActionIconClicked = (action: SpeedDialAction<TName>) => {
     onActionClicked(action.name);
   };
 
   return (
-    <div className={classes.root}>
+    <div>
       <SpeedDial
-        ariaLabel="Save actions"
+        ariaLabel="Actions speed dial"
         className={classes.speedDial}
         icon={<MoreVertIcon />}
         onClose={handleClose}
@@ -79,4 +69,4 @@ const EditorPageActionsFab: React.FC<Props> = ({
   );
 };
 
-export default EditorPageActionsFab;
+export default SpeedDialFab;

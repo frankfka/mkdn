@@ -5,20 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af44a07c-3c48-4739-8ea0-bb57c738632b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/components/MarkdownViewerCidEntryForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/components/MarkdownViewerNoContentView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/util/isCid.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/viewer/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/components/SpeedDialFab/SpeedDialFab.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/components/AppPage/AppPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/AppPage/AppPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/components/LoadingView/LoadingView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/LoadingView/LoadingView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/components/NavBar/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/NavBar/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/BackdropLoadingScreen/BackdropLoadingScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/BackdropLoadingScreen/BackdropLoadingScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/EditorPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/EditorPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishSuccessDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishSuccessDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/MarkdownViewerPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/MarkdownViewerPage/MarkdownViewerPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/theme/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/theme/theme.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/viewer/[markdownCid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/viewer/[markdownCid].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/components/EditorPageActions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/components/EditorPageActionsFab.tsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -108,7 +100,7 @@
       <workItem from="1629090337550" duration="1219000" />
       <workItem from="1629124907138" duration="1303000" />
       <workItem from="1629299517761" duration="357000" />
-      <workItem from="1629396265035" duration="16077000" />
+      <workItem from="1629396265035" duration="19331000" />
     </task>
     <servers />
   </component>
