@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
+import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import ShareIcon from '@material-ui/icons/Share';
 import React, { useCallback, useState } from 'react';
 import { getCidGatewayUrl } from '../../../util/cidUtils';
@@ -22,15 +22,17 @@ import PublishSuccessDialog from './components/PublishSuccessDialog';
 
 const useStyles = makeStyles((theme) => ({}));
 
+// Info dialog state
 type EditorPageInfoDialogState = {
   title?: string;
   message: string;
 };
 
+// Actions speed dial
 type EditorPageSpeedDialActionName = 'Publish' | 'Download';
 export const editorPageSpeedDialActions: SpeedDialAction<EditorPageSpeedDialActionName>[] =
   [
-    { icon: <SaveIcon />, name: 'Download' },
+    { icon: <SaveAltOutlinedIcon />, name: 'Download' },
     { icon: <ShareIcon />, name: 'Publish' },
   ];
 
