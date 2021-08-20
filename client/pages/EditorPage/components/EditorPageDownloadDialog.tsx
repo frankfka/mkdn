@@ -7,10 +7,8 @@ import {
   DialogTitle,
   makeStyles,
   TextField,
-  Typography,
 } from '@material-ui/core';
 import React from 'react';
-import SpacingContainer from '../../../components/SpacingContainer/SpacingContainer';
 import { useEditorContext } from '../../../context/EditorContext';
 
 type Props = {
@@ -33,7 +31,7 @@ const EditorPageDownloadDialog: React.FC<Props> = ({ open, setOpen }) => {
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
-      <DialogTitle>Download Your File 💾</DialogTitle>
+      <DialogTitle>Download 💾</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Box pb={2}>
           <TextField

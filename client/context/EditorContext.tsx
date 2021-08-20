@@ -26,6 +26,8 @@ type EditorContextData = {
   fileName: string;
   setFileName(val: string): void;
   getEditorValue: MutableRefObject<GetEditorValueFn>;
+  password: string;
+  setPassword(val: string): void;
   // Functions
   uploadImage(file: File): Promise<string>;
   publishMarkdown(): Promise<string>;
@@ -38,6 +40,8 @@ export const EditorContext = createContext<EditorContextData>({
   fileName: 'Untitled',
   setFileName() {},
   getEditorValue: { current: () => '' },
+  password: '',
+  setPassword() {},
   isInitialized: false,
   downloadMarkdown(): void {},
   async publishMarkdown() {
@@ -55,13 +59,14 @@ export const EditorContextProvider: React.FC = ({ children }) => {
 
   // Editor state
   const [fileName, setFileName] = useState('');
+  const [password, setPassword] = useState('');
   const getEditorValue = useRef<GetEditorValueFn>(() => '');
-  const getCurrentEditorState = (): EditorState => {
+  const getCurrentEditorState = useCallback((): EditorState => {
     return {
       filename: fileName,
       markdown: getEditorValue.current(),
     };
-  };
+  }, [fileName]);
 
   // Upload function - returns CID or throws (TODO: keep track of current uploads and unpin if needed)
   const uploadImage = async (file: File): Promise<string> => {
@@ -78,6 +83,7 @@ export const EditorContextProvider: React.FC = ({ children }) => {
   const publishMarkdown = async (): Promise<string> => {
     const currentState = getCurrentEditorState();
 
+    // TODO: encryption with password: https://www.npmjs.com/package/crypto-js
     const publishResponse = await callPublishApi(currentState);
 
     if (publishResponse.data?.cid) {
@@ -111,7 +117,7 @@ export const EditorContextProvider: React.FC = ({ children }) => {
   }, []);
 
   // Auto-save the current state every 5 seconds
-  const saveCurrentEditorState = () => {
+  const saveCurrentEditorState = useCallback(() => {
     if (!isInitialized) {
       return;
     }
@@ -125,7 +131,7 @@ export const EditorContextProvider: React.FC = ({ children }) => {
       EDITOR_LOCALSTORAGE_MARKDOWN_KEY,
       currentState.markdown
     );
-  };
+  }, [isInitialized, getCurrentEditorState]);
   useEffect(() => {
     const autoSaveInterval = setInterval(saveCurrentEditorState, 5000);
 
@@ -138,6 +144,8 @@ export const EditorContextProvider: React.FC = ({ children }) => {
     fileName,
     setFileName,
     getEditorValue,
+    password,
+    setPassword,
     uploadImage,
     publishMarkdown,
     downloadMarkdown,

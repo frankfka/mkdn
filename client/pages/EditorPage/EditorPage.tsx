@@ -8,7 +8,6 @@ import {
   isImageMimeType,
 } from '../../../util/fileUploadUtils';
 import AppPage from '../../components/AppPage/AppPage';
-import BackdropLoadingScreen from '../../components/BackdropLoadingScreen/BackdropLoadingScreen';
 import InfoDialog from '../../components/InfoDialog/InfoDialog';
 
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
@@ -18,7 +17,7 @@ import SpeedDialFab, {
 import Toast, { ToastState } from '../../components/Toast/Toast';
 import { useEditorContext } from '../../context/EditorContext';
 import EditorPageDownloadDialog from './components/EditorPageDownloadDialog';
-import PublishSuccessDialog from './components/PublishSuccessDialog';
+import PublishDialog from './components/PublishDialog/PublishDialog';
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -54,9 +53,7 @@ const EditorPage = () => {
   const [showFullScreenLoading, setShowFullScreenLoading] = useState(false);
 
   // Publish success dialog
-  const [publishedCid, setPublishedCid] = useState('');
-  const showPublishSuccessDialog = !!publishedCid;
-  const closePublishSuccessDialog = () => setPublishedCid('');
+  const [showPublishDialog, setShowPublishDialog] = useState(false);
 
   // Download dialog
   const [showDownloadDialog, setShowDownloadDialog] = useState(false);
@@ -114,34 +111,12 @@ const EditorPage = () => {
       // Show download dialog
       setShowDownloadDialog(true);
     } else if (actionName === 'Publish') {
-      // Start loading
-      setShowFullScreenLoading(true);
-
-      try {
-        const publishedCid = await editorContext.publishMarkdown();
-        console.log('Published successfully', publishedCid);
-        setPublishedCid(publishedCid);
-      } catch (err) {
-        setToastState({
-          type: 'error',
-          message: 'Something went wrong during publishing. Please try again.',
-        });
-      }
-
-      setShowFullScreenLoading(false);
+      setShowPublishDialog(true);
     }
   };
 
   return (
     <AppPage>
-      {/*Loading / dialogs*/}
-      <BackdropLoadingScreen isOpen={showFullScreenLoading} />
-      <PublishSuccessDialog
-        cid={publishedCid}
-        isOpen={showPublishSuccessDialog}
-        closeDialog={closePublishSuccessDialog}
-      />
-
       {/*Editor FAB*/}
       <SpeedDialFab
         actions={editorPageSpeedDialActions}
@@ -159,6 +134,12 @@ const EditorPage = () => {
         closeDialog={closeInfoDialog}
         title={infoDialogState?.title}
         message={infoDialogState?.message}
+      />
+
+      {/*Publish Dialog*/}
+      <PublishDialog
+        isOpen={showPublishDialog}
+        setIsOpen={setShowPublishDialog}
       />
 
       {/*Download Dialog*/}
