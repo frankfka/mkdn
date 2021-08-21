@@ -8,12 +8,12 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import React, { useState } from 'react';
-import SpacingContainer from '../../../../components/SpacingContainer/SpacingContainer';
-import PublishedMarkdownData from './PublishedMarkdownData';
-import { useEditorContext } from '../../../../context/EditorContext';
 import { Alert } from '@material-ui/lab';
 import { nanoid } from 'nanoid';
+import React, { useState } from 'react';
+import SpacingContainer from '../../../../components/SpacingContainer/SpacingContainer';
+import { useEditorContext } from '../../../../context/EditorContext';
+import PublishedMarkdownData from './PublishedMarkdownData';
 
 type Props = {
   setPublishedData(data: PublishedMarkdownData): void;
@@ -79,7 +79,7 @@ const ConfirmPublishContent: React.FC<Props> = ({
             value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
             fullWidth
-            label="Password"
+            label="Password (optional)"
             variant="outlined"
             disabled={isPublishing}
             InputProps={{

@@ -11,7 +11,7 @@ import {
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import React from 'react';
 import { getCidGatewayUrl } from '../../../../../util/cidUtils';
-import getViewerUrlFromCid from '../../../../../util/getViewerUrlFromCid';
+import getViewerUrl from '../../../../../util/getViewerUrl';
 import SpacingContainer from '../../../../components/SpacingContainer/SpacingContainer';
 import TextFieldWithCopy from '../../../../components/TextFieldWithCopy/TextFieldWithCopy';
 import PublishedMarkdownData from './PublishedMarkdownData';
@@ -31,7 +31,7 @@ const PublishSuccessContent: React.FC<Props> = ({
 
   // TODO: include password
   const { cid, password } = publishedData;
-  const viewerUrl = getViewerUrlFromCid(cid);
+  const viewerUrl = getViewerUrl(cid, password);
 
   return (
     <>
@@ -65,6 +65,15 @@ const PublishSuccessContent: React.FC<Props> = ({
             label="Link to File"
             variant="outlined"
           />
+          {!!password && (
+            <TextFieldWithCopy
+              value={password}
+              readonly
+              fullWidth
+              label="Password"
+              variant="outlined"
+            />
+          )}
           <Box textAlign="center">
             <Button
               variant="contained"

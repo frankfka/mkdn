@@ -11,6 +11,7 @@ import MarkdownFileData from '../../types/MarkdownFileData';
 import callPublishApi from '../util/api/callPublishApi';
 import callUploadApi from '../util/api/callUploadApi';
 import downloadMarkdownFile from '../util/downloadMarkdownFile';
+import { encryptMarkdown } from '../util/markdownEncryption';
 
 const EDITOR_LOCALSTORAGE_BASE_KEY = 'mkdn.saved-editor-state';
 export const EDITOR_LOCALSTORAGE_FILENAME_KEY = `${EDITOR_LOCALSTORAGE_BASE_KEY}.filename`;
@@ -60,6 +61,8 @@ export const EditorContextProvider: React.FC = ({ children }) => {
   // Editor state
   const [fileName, setFileName] = useState('');
   const [password, setPassword] = useState('');
+  const setCleanedPassword = (val: string) => setPassword(val.trim());
+
   const getEditorValue = useRef<GetEditorValueFn>(() => '');
   const getCurrentEditorState = useCallback((): EditorState => {
     return {
@@ -83,7 +86,11 @@ export const EditorContextProvider: React.FC = ({ children }) => {
   const publishMarkdown = async (): Promise<string> => {
     const currentState = getCurrentEditorState();
 
-    // TODO: encryption with password: https://www.npmjs.com/package/crypto-js
+    // Encrypt if password given
+    if (!!password) {
+      currentState.markdown = encryptMarkdown(currentState.markdown, password);
+    }
+
     const publishResponse = await callPublishApi(currentState);
 
     if (publishResponse.data?.cid) {
@@ -145,7 +152,7 @@ export const EditorContextProvider: React.FC = ({ children }) => {
     setFileName,
     getEditorValue,
     password,
-    setPassword,
+    setPassword: setCleanedPassword,
     uploadImage,
     publishMarkdown,
     downloadMarkdown,
