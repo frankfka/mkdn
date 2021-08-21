@@ -5,9 +5,6 @@
 /.pnp
 .pnp.js
 
-# TODO: Remove me on personal computer
-yarn.lock
-
 # testing
 /coverage
 

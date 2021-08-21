@@ -13,13 +13,18 @@ import SpacingContainer from '../../../../components/SpacingContainer/SpacingCon
 import PublishedMarkdownData from './PublishedMarkdownData';
 import { useEditorContext } from '../../../../context/EditorContext';
 import { Alert } from '@material-ui/lab';
+import { nanoid } from 'nanoid';
 
 type Props = {
   setPublishedData(data: PublishedMarkdownData): void;
   closeDialog(): void;
 };
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  generatePasswordButton: {
+    marginLeft: theme.spacing(1),
+  },
+}));
 
 const ConfirmPublishContent: React.FC<Props> = ({
   setPublishedData,
@@ -32,6 +37,10 @@ const ConfirmPublishContent: React.FC<Props> = ({
 
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState(false);
+
+  const generateRandomPassword = () => {
+    setPassword(nanoid());
+  };
 
   const onPublishClicked = async () => {
     setIsPublishing(true);
@@ -61,11 +70,11 @@ const ConfirmPublishContent: React.FC<Props> = ({
               Something went wrong. Please try again.
             </Alert>
           )}
-          <Typography variant="body1">
+          <Typography variant="body1" paragraph>
             Your Markdown file will be published on IPFS publicly. If you want
-            to encrypt your content, you can specify an optional password.
+            to encrypt your content, you can specify an optional password which
+            will be included as part of the shareable link.
           </Typography>
-          {/*TODO: Autogen*/}
           <TextField
             value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
@@ -73,6 +82,18 @@ const ConfirmPublishContent: React.FC<Props> = ({
             label="Password"
             variant="outlined"
             disabled={isPublishing}
+            InputProps={{
+              endAdornment: (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.generatePasswordButton}
+                  onClick={generateRandomPassword}
+                >
+                  Generate
+                </Button>
+              ),
+            }}
           />
         </SpacingContainer>
       </DialogContent>

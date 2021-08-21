@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af44a07c-3c48-4739-8ea0-bb57c738632b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/PublishedMarkdownData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/ConfirmPublishContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/ConfirmPublishContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/PublishDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/PublishDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/PublishSuccessContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog/PublishSuccessContent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,12 +44,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/pages/EditorPage/components/PublishDialog" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v16.3.0/bin/node" />
+    <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="optimize.imports.on.save" value="true" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
@@ -102,6 +101,7 @@
       <workItem from="1629124907138" duration="1303000" />
       <workItem from="1629299517761" duration="357000" />
       <workItem from="1629396265035" duration="27181000" />
+      <workItem from="1629526495930" duration="990000" />
     </task>
     <servers />
   </component>
