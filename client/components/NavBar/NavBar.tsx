@@ -1,11 +1,18 @@
-import { AppBar, Button, Link, makeStyles, Toolbar } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import SubjectOutlinedIcon from '@material-ui/icons/SubjectOutlined';
+import {
+  AppBar,
+  Link,
+  makeStyles,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from '@material-ui/core';
 import Image from 'next/image';
 import React from 'react';
 
 import AppLogo from '../../../public/mkdn-logo.svg';
 import SpacingContainer from '../SpacingContainer/SpacingContainer';
+import MobileNavMenu from './MobileNavMenu';
+import FullNavMenu from './FullNavMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,38 +33,23 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar: React.FC = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const renderFullMenu = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const menu = renderFullMenu ? <FullNavMenu /> : <MobileNavMenu />;
 
   return (
     <>
       <AppBar position="fixed" color="transparent">
         <Toolbar className={classes.toolbar}>
-          <SpacingContainer justifyContent="space-between">
+          <SpacingContainer justifyContent="space-between" alignItems="center">
             {/*Logo*/}
             <Link href="/">
               <Image src={AppLogo} height={36} width={96} alt="mkdn Logo" />
             </Link>
 
-            {/*Right buttons*/}
-            <SpacingContainer>
-              <Button
-                variant="outlined"
-                color="primary"
-                target="_blank"
-                href="/viewer"
-                startIcon={<SubjectOutlinedIcon />}
-              >
-                View
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                target="_blank"
-                href="/"
-                startIcon={<AddIcon />}
-              >
-                Create
-              </Button>
-            </SpacingContainer>
+            {/*Menu buttons*/}
+            {menu}
           </SpacingContainer>
         </Toolbar>
       </AppBar>
