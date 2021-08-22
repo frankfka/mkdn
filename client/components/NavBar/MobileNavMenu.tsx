@@ -1,12 +1,15 @@
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 type Props = {};
 
 const MobileNavMenu: React.FC<Props> = ({}) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement>();
+
+  const currentPath = useRouter().pathname;
 
   return (
     <div>
@@ -20,10 +23,10 @@ const MobileNavMenu: React.FC<Props> = ({}) => {
         onClose={() => setAnchorEl(undefined)}
       >
         <Link href="/viewer" passHref>
-          <MenuItem>View</MenuItem>
+          <MenuItem selected={currentPath === '/viewer'}>View</MenuItem>
         </Link>
         <Link href="/" passHref>
-          <MenuItem>Create</MenuItem>
+          <MenuItem selected={currentPath === '/'}>Create</MenuItem>
         </Link>
       </Menu>
     </div>
