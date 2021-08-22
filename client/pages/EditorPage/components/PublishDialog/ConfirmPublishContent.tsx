@@ -71,9 +71,9 @@ const ConfirmPublishContent: React.FC<Props> = ({
             </Alert>
           )}
           <Typography variant="body1" paragraph>
-            Your Markdown file will be published on IPFS publicly. If you want
-            to encrypt your content, you can specify an optional password which
-            will be included as part of the shareable link.
+            Your Markdown file will be published on IPFS. If you want to encrypt
+            your content, you can specify an optional password which will be
+            included as part of the shareable link.
           </Typography>
           <TextField
             value={password}
