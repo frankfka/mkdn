@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -11,38 +10,33 @@ import {
 } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import React from 'react';
-import { getCidGatewayUrl } from '../../../../util/cidUtils';
-import getViewerUrlFromCid from '../../../../util/getViewerUrlFromCid';
-import SpacingContainer from '../../../components/SpacingContainer/SpacingContainer';
-import TextFieldWithCopy from '../../../components/TextFieldWithCopy/TextFieldWithCopy';
+import { getCidGatewayUrl } from '../../../../../util/cidUtils';
+import getViewerUrl from '../../../../../util/getViewerUrl';
+import SpacingContainer from '../../../../components/SpacingContainer/SpacingContainer';
+import TextFieldWithCopy from '../../../../components/TextFieldWithCopy/TextFieldWithCopy';
+import PublishedMarkdownData from './PublishedMarkdownData';
 
 type Props = {
-  cid: string;
-  isOpen: boolean;
+  publishedData: PublishedMarkdownData;
   closeDialog(): void;
 };
 
-const useStyles = makeStyles((theme) => ({
-  contentGrid: {
-    width: '100%',
-  },
-  fullWidthItem: {
-    width: '100%',
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
-const PublishSuccessDialog: React.FC<Props> = ({
-  cid,
-  isOpen,
+const PublishSuccessContent: React.FC<Props> = ({
+  publishedData,
   closeDialog,
 }) => {
   const classes = useStyles();
 
+  const { cid, password } = publishedData;
+  const viewerUrl = getViewerUrl(cid, password);
+
   return (
-    <Dialog open={isOpen} onClose={closeDialog} fullWidth scroll="paper">
+    <>
       <DialogTitle>Published! 🎉</DialogTitle>
       <DialogContent>
-        <SpacingContainer direction="column" className={classes.contentGrid}>
+        <SpacingContainer direction="column">
           <Typography variant="body1">
             Your Markdown file was published to the Interplanetary File System
             (IPFS). It will be persisted for at least 30 days.{' '}
@@ -70,11 +64,20 @@ const PublishSuccessDialog: React.FC<Props> = ({
             label="Link to File"
             variant="outlined"
           />
+          {!!password && (
+            <TextFieldWithCopy
+              value={password}
+              readonly
+              fullWidth
+              label="Password"
+              variant="outlined"
+            />
+          )}
           <Box textAlign="center">
             <Button
               variant="contained"
               color="primary"
-              href={getViewerUrlFromCid(cid)}
+              href={viewerUrl}
               target="_blank"
               startIcon={<OpenInNewIcon />}
             >
@@ -88,8 +91,8 @@ const PublishSuccessDialog: React.FC<Props> = ({
           Close
         </Button>
       </DialogActions>
-    </Dialog>
+    </>
   );
 };
 
-export default PublishSuccessDialog;
+export default PublishSuccessContent;

@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import MarkdownViewerPage from '../../client/pages/MarkdownViewerPage/MarkdownViewerPage';
 import isCid from '../../client/util/isCid';
+import { decryptMarkdown } from '../../client/util/markdownEncryption';
 import fetchMarkdownFromIpfs from '../../server/fetchMarkdownFromIpfs';
 
 type Props = {
@@ -19,7 +20,9 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> => {
   let markdown = '';
 
-  const { markdownCid } = query;
+  const { markdownCid, password } = query;
+
+  // Fetch markdown
   if (markdownCid && typeof markdownCid === 'string' && isCid(markdownCid)) {
     try {
       markdown = await fetchMarkdownFromIpfs(markdownCid);
@@ -31,6 +34,11 @@ export const getServerSideProps = async ({
         e
       );
     }
+  }
+
+  // Decrypt if needed
+  if (!!password && typeof password === 'string') {
+    markdown = decryptMarkdown(markdown, password);
   }
 
   return {

@@ -1,12 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+.idea/
+
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
-
-# TODO: Remove me on personal computer
-yarn.lock
 
 # testing
 /coverage

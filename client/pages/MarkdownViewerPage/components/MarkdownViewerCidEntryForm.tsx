@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import getViewerUrl from '../../../../util/getViewerUrl';
 import CenteredInfoContainer from '../../../components/CenteredInfoContainer/CenteredInfoContainer';
 import SpacingContainer from '../../../components/SpacingContainer/SpacingContainer';
 import isCid from '../../../util/isCid';
@@ -28,10 +29,11 @@ const MarkdownViewerCidEntryForm = () => {
   // As we use getServerSideProps for viewer, retrieval takes a bit, so show a loading indicator
   const [loadingCid, setLoadingCid] = useState(false);
   const [cid, setCid] = useState('');
+  const [password, setPassword] = useState('');
 
   const onViewClicked = () => {
     setLoadingCid(true);
-    router.push('/viewer/' + cid);
+    router.push(getViewerUrl(cid, password));
   };
   return (
     <CenteredInfoContainer>
@@ -40,7 +42,8 @@ const MarkdownViewerCidEntryForm = () => {
           View Markdown
         </Typography>
         <Typography variant="subtitle1" align="center">
-          Enter a CID to view a Markdown document on IPFS.
+          Enter a CID and an optional password to view a Markdown document on
+          IPFS.
         </Typography>
         <TextField
           disabled={loadingCid}
@@ -48,6 +51,14 @@ const MarkdownViewerCidEntryForm = () => {
           onChange={(e) => setCid(e.currentTarget.value)}
           className={classes.textField}
           label="Markdown CID"
+          variant="outlined"
+        />
+        <TextField
+          disabled={loadingCid}
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value.trim())}
+          className={classes.textField}
+          label="Password (optional)"
           variant="outlined"
         />
         <Button

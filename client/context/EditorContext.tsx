@@ -11,6 +11,7 @@ import MarkdownFileData from '../../types/MarkdownFileData';
 import callPublishApi from '../util/api/callPublishApi';
 import callUploadApi from '../util/api/callUploadApi';
 import downloadMarkdownFile from '../util/downloadMarkdownFile';
+import { encryptMarkdown } from '../util/markdownEncryption';
 
 const EDITOR_LOCALSTORAGE_BASE_KEY = 'mkdn.saved-editor-state';
 export const EDITOR_LOCALSTORAGE_FILENAME_KEY = `${EDITOR_LOCALSTORAGE_BASE_KEY}.filename`;
@@ -26,6 +27,8 @@ type EditorContextData = {
   fileName: string;
   setFileName(val: string): void;
   getEditorValue: MutableRefObject<GetEditorValueFn>;
+  password: string;
+  setPassword(val: string): void;
   // Functions
   uploadImage(file: File): Promise<string>;
   publishMarkdown(): Promise<string>;
@@ -38,6 +41,8 @@ export const EditorContext = createContext<EditorContextData>({
   fileName: 'Untitled',
   setFileName() {},
   getEditorValue: { current: () => '' },
+  password: '',
+  setPassword() {},
   isInitialized: false,
   downloadMarkdown(): void {},
   async publishMarkdown() {
@@ -55,13 +60,16 @@ export const EditorContextProvider: React.FC = ({ children }) => {
 
   // Editor state
   const [fileName, setFileName] = useState('');
+  const [password, setPassword] = useState('');
+  const setCleanedPassword = (val: string) => setPassword(val.trim());
+
   const getEditorValue = useRef<GetEditorValueFn>(() => '');
-  const getCurrentEditorState = (): EditorState => {
+  const getCurrentEditorState = useCallback((): EditorState => {
     return {
       filename: fileName,
       markdown: getEditorValue.current(),
     };
-  };
+  }, [fileName]);
 
   // Upload function - returns CID or throws (TODO: keep track of current uploads and unpin if needed)
   const uploadImage = async (file: File): Promise<string> => {
@@ -77,6 +85,11 @@ export const EditorContextProvider: React.FC = ({ children }) => {
   // Publish function - returns CID or throws
   const publishMarkdown = async (): Promise<string> => {
     const currentState = getCurrentEditorState();
+
+    // Encrypt if password given
+    if (!!password) {
+      currentState.markdown = encryptMarkdown(currentState.markdown, password);
+    }
 
     const publishResponse = await callPublishApi(currentState);
 
@@ -111,7 +124,7 @@ export const EditorContextProvider: React.FC = ({ children }) => {
   }, []);
 
   // Auto-save the current state every 5 seconds
-  const saveCurrentEditorState = () => {
+  const saveCurrentEditorState = useCallback(() => {
     if (!isInitialized) {
       return;
     }
@@ -125,7 +138,7 @@ export const EditorContextProvider: React.FC = ({ children }) => {
       EDITOR_LOCALSTORAGE_MARKDOWN_KEY,
       currentState.markdown
     );
-  };
+  }, [isInitialized, getCurrentEditorState]);
   useEffect(() => {
     const autoSaveInterval = setInterval(saveCurrentEditorState, 5000);
 
@@ -138,6 +151,8 @@ export const EditorContextProvider: React.FC = ({ children }) => {
     fileName,
     setFileName,
     getEditorValue,
+    password,
+    setPassword: setCleanedPassword,
     uploadImage,
     publishMarkdown,
     downloadMarkdown,
