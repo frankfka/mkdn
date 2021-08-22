@@ -35,6 +35,7 @@ const MarkdownViewerCidEntryForm = () => {
     setLoadingCid(true);
     router.push(getViewerUrl(cid, password));
   };
+
   return (
     <CenteredInfoContainer>
       <SpacingContainer direction="column">

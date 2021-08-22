@@ -1,4 +1,10 @@
-import { Box, BoxProps, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  BoxProps,
+  makeStyles,
+  useMediaQuery,
+  useTheme,
+} from '@material-ui/core';
 import React from 'react';
 
 /*
@@ -16,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CenteredInfoContainer: React.FC<Props> = ({ children, ...boxProps }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const useLargePadding = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Box
@@ -24,8 +32,8 @@ const CenteredInfoContainer: React.FC<Props> = ({ children, ...boxProps }) => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      px={5}
-      py={15}
+      px={useLargePadding ? 5 : 2}
+      py={useLargePadding ? 15 : 5}
       {...boxProps}
     >
       {children}
