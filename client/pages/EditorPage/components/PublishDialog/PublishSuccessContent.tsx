@@ -29,7 +29,6 @@ const PublishSuccessContent: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
 
-  // TODO: include password
   const { cid, password } = publishedData;
   const viewerUrl = getViewerUrl(cid, password);
 
