@@ -11,8 +11,8 @@ import React from 'react';
 
 import AppLogo from '../../../public/mkdn-logo.svg';
 import SpacingContainer from '../SpacingContainer/SpacingContainer';
-import MobileNavMenu from './MobileNavMenu';
 import FullNavMenu from './FullNavMenu';
+import MobileNavMenu from './MobileNavMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {

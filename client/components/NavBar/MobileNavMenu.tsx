@@ -1,12 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import {
-  IconButton,
-  Link as MaterialLink,
-  Menu,
-  MenuItem,
-} from '@material-ui/core';
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Link from 'next/link';
+import React from 'react';
 
 type Props = {};
 
@@ -16,7 +11,7 @@ const MobileNavMenu: React.FC<Props> = ({}) => {
   return (
     <div>
       <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-        <MoreVertIcon />
+        <MoreVertIcon color="primary" />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -24,17 +19,12 @@ const MobileNavMenu: React.FC<Props> = ({}) => {
         open={!!anchorEl}
         onClose={() => setAnchorEl(undefined)}
       >
-        <MenuItem>
-          {/*TODO: full width and passHref*/}
-          <Link href="/viewer">
-            <MaterialLink underline="none">View</MaterialLink>
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="/" passHref>
-            <MaterialLink underline="none">Create</MaterialLink>
-          </Link>
-        </MenuItem>
+        <Link href="/viewer" passHref>
+          <MenuItem>View</MenuItem>
+        </Link>
+        <Link href="/" passHref>
+          <MenuItem>Create</MenuItem>
+        </Link>
       </Menu>
     </div>
   );
