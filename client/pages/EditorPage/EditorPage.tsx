@@ -16,8 +16,10 @@ import SpeedDialFab, {
 } from '../../components/SpeedDialFab/SpeedDialFab';
 import Toast, { ToastState } from '../../components/Toast/Toast';
 import { useEditorContext } from '../../context/EditorContext';
-import EditorPageDownloadDialog from './components/EditorPageDownloadDialog';
+import DownloadDialog from './components/DownloadDialog';
 import PublishDialog from './components/PublishDialog/PublishDialog';
+import EditorSettingsBar from './components/EditorSettingsBar';
+import SettingsDialog from './components/SettingsDialog';
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -49,8 +51,8 @@ const EditorPage = () => {
   // FAB open state
   const [openActionsFab, setOpenActionsFab] = useState(false);
 
-  // Loading state
-  const [showFullScreenLoading, setShowFullScreenLoading] = useState(false);
+  // Settings dialog
+  const [showSettingsDialog, setShowSettingsDialog] = useState(false);
 
   // Publish success dialog
   const [showPublishDialog, setShowPublishDialog] = useState(false);
@@ -143,22 +145,32 @@ const EditorPage = () => {
       />
 
       {/*Download Dialog*/}
-      <EditorPageDownloadDialog
+      <DownloadDialog
         open={showDownloadDialog}
         setOpen={setShowDownloadDialog}
       />
 
+      <SettingsDialog
+        open={showSettingsDialog}
+        setOpen={setShowSettingsDialog}
+      />
+
       {/*Main editor*/}
       {editorContext.isInitialized && (
-        <MarkdownEditor
-          getMarkdownRef={editorContext.getEditorValue}
-          initialContent={editorContext.savedEditorState?.markdown}
-          uploadImage={uploadImage}
-          onImageUploadStart={onImageUploadStart}
-          onImageUploadStop={onImageUploadStop}
-          onSave={onEditorSaveRequested}
-          onShowToast={onEditorShowToast}
-        />
+        <div>
+          <EditorSettingsBar
+            onSettingsClicked={() => setShowSettingsDialog(true)}
+          />
+          <MarkdownEditor
+            getMarkdownRef={editorContext.getEditorValue}
+            initialContent={editorContext.savedEditorState?.markdown}
+            uploadImage={uploadImage}
+            onImageUploadStart={onImageUploadStart}
+            onImageUploadStop={onImageUploadStop}
+            onSave={onEditorSaveRequested}
+            onShowToast={onEditorShowToast}
+          />
+        </div>
       )}
     </AppPage>
   );
