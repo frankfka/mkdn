@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditorPageDownloadDialog: React.FC<Props> = ({ open, setOpen }) => {
+const DownloadDialog: React.FC<Props> = ({ open, setOpen }) => {
   const classes = useStyles();
   const editorContext = useEditorContext();
 
@@ -54,4 +54,4 @@ const EditorPageDownloadDialog: React.FC<Props> = ({ open, setOpen }) => {
   );
 };
 
-export default EditorPageDownloadDialog;
+export default DownloadDialog;

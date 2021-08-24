@@ -1,6 +1,7 @@
 import React, {
   createContext,
   MutableRefObject,
+  SetStateAction,
   useCallback,
   useContext,
   useEffect,
@@ -12,10 +13,13 @@ import callPublishApi from '../util/api/callPublishApi';
 import callUploadApi from '../util/api/callUploadApi';
 import downloadMarkdownFile from '../util/downloadMarkdownFile';
 import { encryptMarkdown } from '../util/markdownEncryption';
-
-const EDITOR_LOCALSTORAGE_BASE_KEY = 'mkdn.saved-editor-state';
-export const EDITOR_LOCALSTORAGE_FILENAME_KEY = `${EDITOR_LOCALSTORAGE_BASE_KEY}.filename`;
-export const EDITOR_LOCALSTORAGE_MARKDOWN_KEY = `${EDITOR_LOCALSTORAGE_BASE_KEY}.markdown`;
+import {
+  getEditorSettingsFromLocalStorage,
+  getMarkdownDataFromLocalStorage,
+  saveEditorSettingsToLocalStorage,
+  saveMarkdownDataToLocalStorage,
+} from '../../util/localStorageUtils';
+import EditorSettings from '../../types/EditorSettings';
 
 type EditorState = MarkdownFileData;
 
@@ -23,6 +27,8 @@ type EditorContextData = {
   isInitialized: boolean;
   // Saved in localstorage
   savedEditorState?: EditorState;
+  editorSettings?: EditorSettings;
+  setEditorSettings(v: SetStateAction<EditorSettings | undefined>): void;
   // Current state
   fileName: string;
   setFileName(val: string): void;
@@ -41,6 +47,7 @@ export const EditorContext = createContext<EditorContextData>({
   fileName: 'Untitled',
   setFileName() {},
   getEditorValue: { current: () => '' },
+  setEditorSettings() {},
   password: '',
   setPassword() {},
   isInitialized: false,
@@ -56,7 +63,8 @@ export const EditorContext = createContext<EditorContextData>({
 export const EditorContextProvider: React.FC = ({ children }) => {
   // Init
   const [savedEditorState, setSavedEditorState] = useState<EditorState>();
-  const isInitialized = savedEditorState != null;
+  const [editorSettings, setEditorSettings] = useState<EditorSettings>();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Editor state
   const [fileName, setFileName] = useState('');
@@ -71,7 +79,34 @@ export const EditorContextProvider: React.FC = ({ children }) => {
     };
   }, [fileName]);
 
-  // Upload function - returns CID or throws (TODO: keep track of current uploads and unpin if needed)
+  // Load from localstorage to initialize the context
+  useEffect(() => {
+    // Editor settings
+    const editorSettings: EditorSettings =
+      getEditorSettingsFromLocalStorage() ?? {
+        editorAutosaveEnabled: true,
+      };
+    setEditorSettings(editorSettings);
+
+    // Editor state
+    const defaultEditorState = {
+      filename: 'Untitled',
+      markdown: '',
+    };
+    const savedEditorState =
+      getMarkdownDataFromLocalStorage() ?? defaultEditorState;
+    const editorState: EditorState = editorSettings.editorAutosaveEnabled
+      ? savedEditorState
+      : defaultEditorState;
+
+    setSavedEditorState(editorState);
+    setFileName(editorState.filename);
+    getEditorValue.current = () => editorState.markdown;
+
+    setIsInitialized(true);
+  }, []);
+
+  // Upload function - returns CID or throws
   const uploadImage = async (file: File): Promise<string> => {
     const uploadResponse = await callUploadApi(file);
 
@@ -109,45 +144,39 @@ export const EditorContextProvider: React.FC = ({ children }) => {
     downloadMarkdownFile(currentState);
   };
 
-  // Load from localstorage to initialize the context
+  // Auto-save the current state every 5 seconds if enabled
   useEffect(() => {
-    const savedEditorState = {
-      filename:
-        localStorage.getItem(EDITOR_LOCALSTORAGE_FILENAME_KEY) ?? 'Untitled',
-      markdown: localStorage.getItem(EDITOR_LOCALSTORAGE_MARKDOWN_KEY) ?? '',
-    };
-
-    setSavedEditorState(savedEditorState);
-
-    setFileName(savedEditorState.filename);
-    getEditorValue.current = () => savedEditorState.markdown;
-  }, []);
-
-  // Auto-save the current state every 5 seconds
-  const saveCurrentEditorState = useCallback(() => {
     if (!isInitialized) {
       return;
     }
-    const currentState = getCurrentEditorState();
 
-    localStorage.setItem(
-      EDITOR_LOCALSTORAGE_FILENAME_KEY,
-      currentState.filename
-    );
-    localStorage.setItem(
-      EDITOR_LOCALSTORAGE_MARKDOWN_KEY,
-      currentState.markdown
-    );
-  }, [isInitialized, getCurrentEditorState]);
-  useEffect(() => {
-    const autoSaveInterval = setInterval(saveCurrentEditorState, 5000);
+    if (editorSettings == null || !editorSettings.editorAutosaveEnabled) {
+      return;
+    }
+
+    const autoSaveInterval = setInterval(() => {
+      saveMarkdownDataToLocalStorage(getCurrentEditorState());
+    }, 5000);
 
     return () => clearInterval(autoSaveInterval);
-  }, [saveCurrentEditorState]);
+  }, [
+    isInitialized,
+    editorSettings?.editorAutosaveEnabled,
+    getCurrentEditorState,
+  ]);
+
+  // Save editor settings when changed
+  useEffect(() => {
+    if (editorSettings != null) {
+      saveEditorSettingsToLocalStorage(editorSettings);
+    }
+  }, [editorSettings]);
 
   const contextData: EditorContextData = {
     isInitialized,
     savedEditorState,
+    editorSettings,
+    setEditorSettings,
     fileName,
     setFileName,
     getEditorValue,

@@ -1,9 +1,13 @@
 import { createTheme } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: '#000',
+    },
+    secondary: {
+      main: grey['800'],
     },
     background: {
       default: '#fff',
